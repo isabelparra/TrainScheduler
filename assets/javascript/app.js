@@ -30,42 +30,58 @@ $('#add-train').on('click', function(event) {
     
    
     // creates local 'temp' object for holding data
-
-    database.ref().push({
+     var newTrain = {
         name: tName,
         destination: tDestination, 
         start: firstTime, 
         frequency: tFrequency
-    });
-});
+    };
 
     // uploads train data to the database
 
-//     // alert 
+    database.ref().push(newTrain);
 
-//     alert('Train succesfully added');
-
-//     // clears all of the text boxes
-//     $('#train-name-input').val('');
-//     $('#destination-input').val('');
-//     $('#first-train-input').val('');
-//     $('#frequency-input').val('');
-
-// });
-
-// // 3. create firebase event for adding train to the database and a row in the html when user adds entry
-
-database.ref().on('child_added', function(snapshot) {
-    var newTrain = snapshot.val();
-
-//     database.ref().push(newTrain);
-
-//     // logs everything to console
-
+//log everything to console
 console.log(newTrain.name);
 console.log(newTrain.destination);
 console.log(newTrain.start);
 console.log(newTrain.frequency);
+
+
+
+//     // alert 
+
+    alert('Train succesfully added');
+
+ // clears all of the text boxes
+    $('#name-input').val('');
+    $('#destination-input').val('');
+    $('#start-input').val('');
+    $('#frequency-input').val('');
+
+});
+
+// // 3. create firebase event for adding train to the database and a row in the html when user adds entry
+
+database.ref().on('child_added', function(childSnapshot, prevChildKey) {
+
+
+//     // logs everything to console
+console.log(childSnapshot.val());
+
+
+// store everything into a variable
+    var tName = childSnapshot.val().name;
+    var tDestination = childSnapshot.val().destination;
+    var firstTime = childSnapshot.val().start;
+    var tFrequency = childSnapshot.val().frequency;
+
+//     // train info
+    console.log(tName);
+    console.log(tDestination);
+    console.log(firstTime);
+    console.log(tFrequency);
+
 
 $('#train-table > tbody').append('<tr><td>' + tName + '</td><td>' + tDestination + '</td><td>' + firstTime + '</td><td>' + tFrequency + '</td></tr>');
       
@@ -75,18 +91,6 @@ $('#train-table > tbody').append('<tr><td>' + tName + '</td><td>' + tDestination
     
     
 // console.log(childSnapshot.val());
-
-// //     // store everything into a variable
-//     var tName = childSnapshot.val().name;
-//     var tDestination = childSnapshot.val().destination;
-//     var firstTime = childSnapshot.val().start;
-//     var tFrequency = childSnapshot.val().frequency;
-
-//     // train info
-//     console.log(tName);
-//     console.log(tDestination);
-//     console.log(firstTime);
-//     console.log(tFrequency);
 
 
 
